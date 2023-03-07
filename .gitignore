@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+resources/wikipedia/processedWiki/*
+resources/wikipedia/test-processedWiki/*
+resources/wikipedia/extractedResources/*
+resources/wikipedia/test-extractedResources/*
+resources/wikipedia/dump/*

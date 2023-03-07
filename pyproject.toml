@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "wiki2gaz"
+version = "0.1.0"
+description = ""
+authors = ["fedenanni <nanni.federico@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+tqdm = "^4.65.0"
+pandas = "^1.5.3"
+bs4 = "^0.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
