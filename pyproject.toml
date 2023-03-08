@@ -11,6 +11,7 @@ tqdm = "^4.65.0"
 pandas = "^1.5.3"
 bs4 = "^0.0.1"
 wikimapper = "^0.1.17"
+pydash = "^6.0.2"
 
 
 [tool.poetry.group.dev.dependencies]

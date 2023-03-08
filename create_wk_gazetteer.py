@@ -14,7 +14,7 @@ from ast import literal_eval
 
 # Load Wikidata resource:
 print("Loading the wikidata gazetteer.")
-wikidata_path = "/resources/wikidata/"
+wikidata_path = "resources/wikidata/"
 df = pd.DataFrame()
 if not Path(wikidata_path + "wikidata_gazetteer.csv").exists():
     all_files = glob.glob(wikidata_path + "extracted/*.csv")
@@ -44,7 +44,7 @@ if not Path(wikidata_path + "mentions_to_wikidata.json").exists():
     # ---------------
 
     # Load Wikipedia resources:
-    wikipedia_path = "/resources/wikipedia/extractedResources/"
+    wikipedia_path = "resources/wikipedia/extractedResources/"
 
     print("Loading mention_overall_dict.")
     with open(wikipedia_path + "mention_overall_dict.json", "r") as f:

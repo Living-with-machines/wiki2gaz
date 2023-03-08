@@ -63,7 +63,7 @@ The script assumes that you have already downloaded a full Wikidata dump (`lates
 
 By default, the script runs on test mode. You can change this behaviour by setting `-t` to `'False'`. Beware that this step will take about 2 full days.
 
-The output is in the form of `.csv` files that will be created in `../resources/wikidata/extracted/`, each containing 5,000 rows corresponding to geographical entities extracted from Wikidata (if they have a corresponding Wikipedia page) with the following fields (corresponding to wikidata properties, e.g. `P7959` for [historical county](https://www.wikidata.org/wiki/Property:P7959); a description of each can be found as comments in the [code](https://github.com/Living-with-machines/toponym-resolution/blob/main/preprocessing/wikipediaprocessing/wikidata_extraction.py#L91-L393)):
+The output is in the form of `.csv` files that will be created in `../resources/wikidata/extracted/`, each containing 5,000 rows corresponding to geographical entities extracted from Wikidata (if they have a corresponding Wikipedia page) with the following fields (corresponding to wikidata properties, e.g. `P7959` for [historical county](https://www.wikidata.org/wiki/Property:P7959); a description of each can be found as comments in the [code](wikidata_extraction.py#L91-L393)):
 
 ```
 'wikidata_id', 'english_label', 'instance_of', 'description_set', 'alias_dict', 'nativelabel', 'population_dict', 'area', 'hcounties', 'date_opening', 'date_closing': date_closing, 'inception_date', 'dissolved_date', 'follows', 'replaces', 'adm_regions', 'countries', 'continents', 'capital_of', 'borders', 'near_water', 'latitude', 'longitude', 'wikititle', 'geonamesIDs', 'connectswith', 'street_address', 'street_located', 'postal_code'
