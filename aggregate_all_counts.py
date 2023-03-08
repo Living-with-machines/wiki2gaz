@@ -19,9 +19,9 @@ parser.add_argument("-t", "--test", dest="test", help="run in test mode", action
 args = parser.parse_args()
 
 if args.test:
-    path = "/resources/wikipedia/test-extractedResources/"
+    path = "resources/wikipedia/test-extractedResources/"
 else:
-    path = "/resources/wikipedia/extractedResources/"
+    path = "resources/wikipedia/extractedResources/"
 
 if pathlib.Path(path).is_dir() == False:
     print("Error! You need to have extracted entity and mention counts in " + path)
