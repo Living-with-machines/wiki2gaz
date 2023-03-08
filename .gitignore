@@ -132,3 +132,4 @@ resources/wikipedia/test-processedWiki/*
 resources/wikipedia/extractedResources/*
 resources/wikipedia/test-extractedResources/*
 resources/wikipedia/dump/*
+resources/wikidata/*

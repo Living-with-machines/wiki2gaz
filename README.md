@@ -46,14 +46,9 @@ To align the Wikipedia pages extracted from the dump to Wikidata you can use:
 ```
 python map_wikidata_wikipedia.py
 ```
-This script relies on the availability of a specific Wikipedia/Wikidata index, which we have created following [these instructions](https://github.com/jcklie/wikimapper#create-your-own-index), using a SQL dump from October 2021. Additionally, we have lowercased Wikipedia page titles in the database, to make sure we could match them with the extracted entities. We did that by running the following script:
+This script relies on the availability of a specific Wikipedia/Wikidata index, which we have created following [these instructions](https://github.com/jcklie/wikimapper#create-your-own-index), using a SQL dump from October 2021.
 
-```
-python lowercase_db.py
-```
-
-
-Our Python script will produce two json files, mapping wikidata ids to wikipedia pages and viceversa. As above, you can run it in `test` mode as well, using the flag `-t`.
+Our Python script will lowercase Wikipedia page titles in the database, to make sure we could match them with the extracted entities and produce two json files, mapping wikidata ids to wikipedia pages and viceversa. As above, you can run it in `test` mode as well, using the flag `-t`.
 
 ## 4. Extract locations from Wikidata
 

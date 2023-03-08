@@ -10,10 +10,12 @@ python = "^3.9"
 tqdm = "^4.65.0"
 pandas = "^1.5.3"
 bs4 = "^0.0.1"
+wikimapper = "^0.1.17"
 
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.1.0"
+ipykernel = "^6.21.3"
 
 [build-system]
 requires = ["poetry-core"]
