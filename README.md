@@ -140,3 +140,7 @@ These scripts will produce the following outputs (note that entities are percent
   - `gazetteer_entity_ids.txt`: Mapped Wikidata IDs of the entities in our gazetteer.
   - `gazetteer_wkdtclass_embeddings.npy`: Wikidata embeddings of entity classes in our gazetteer.
   - `gazetteer_wkdtclass_ids.txt`: Mapped Wikidata IDs of the entity classes in our gazetteer.
+
+## Credits
+
+This repository collects a series of scripts written by Mariona Coll Ardanuy and Federico Nanni as part of the Living with Machines project. It was supported by Living with Machines (AHRC grant AH/S01179X/1) and The Alan Turing Institute (EPSRC grant EP/ N510129/1).
