@@ -133,3 +133,4 @@ resources/wikipedia/extractedResources/*
 resources/wikipedia/test-extractedResources/*
 resources/wikipedia/dump/*
 resources/wikidata/*
+resources/rel_db/*
