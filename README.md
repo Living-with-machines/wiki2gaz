@@ -23,7 +23,7 @@ Then you can run the tool with the following command:
 python WikiExtractor.py -l -s -o ../resources/wikipedia/processedWiki/ [here put the path to the Wikipedia Dump .xml.bz2]
 ```
 
-Note that the flag -s will keep the sections and the flag -l the links.
+Note that the flag -s will keep the sections and the flag -l the links. A previous version of these scripts can be found [here](https://github.com/fedenanni/Reimplementing-TagMe).
 
 ## 2. Extract entities/mentions frequency counts and pages
 
