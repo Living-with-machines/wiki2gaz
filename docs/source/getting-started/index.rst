@@ -29,9 +29,11 @@ percent encoded across all files):
       duplicate hashed filenames. This file should remain empty.
     - A ``Store-Counts/`` folder, containing partial counts as ``.json`` files.
     - ``entities_overall_dict.json``: this is a dictionary which maps each
-      entity to a ``Counter`` object of all possible mentions
+      entity to a :py:class:`~collections.Counter` object of all possible
+      mentions
     - ``mention_overall_dict.json``: this is a dictionary which maps each
-      mention to a ``Counter`` object of all possible associated entities.
+      mention to a :py:class:`~collections.Counter` object of all possible
+      associated entities.
     - ``overall_entity_freq.json``: this is a dictionary which simply maps an
       entity to its overall frequency in the Wikipedia corpus.
     - ``overall_mentions_freq.json``: this is a dictionary which simply maps a
