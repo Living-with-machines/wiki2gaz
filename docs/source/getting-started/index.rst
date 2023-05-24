@@ -21,13 +21,13 @@ percent encoded across all files):
 
 - In ``resources/wikipedia/extractedResources/``:
 
-    - A ``Pages/`` folder, containing a ``.json`` file for each page available
+    - A ``Pages/`` folder, containing a JSON file for each page available
       in the input Wikipedia dump. Note that due to the presence of specific
       characters of to the length of some pages titles, some titles have been
       hashed.
     - ``hashed_duplicates.csv``: just to check in case there are issues with
       duplicate hashed filenames. This file should remain empty.
-    - A ``Store-Counts/`` folder, containing partial counts as ``.json`` files.
+    - A ``Store-Counts/`` folder, containing partial counts as JSON files.
     - ``entities_overall_dict.json``: this is a dictionary which maps each
       entity to a :py:class:`~collections.Counter` object of all possible
       mentions
@@ -49,7 +49,7 @@ percent encoded across all files):
 
 - In ``resources/wikidata/extracted/``:
 
-    - A list of ``.csv`` files, each containing 5,000 rows corresponding to
+    - A list of CSV files, each containing 5,000 rows corresponding to
       geographical entities extracted from Wikidata.
     - ``wikidata_gazetteer.csv``: The Wikidata-based gazetteer.
     - ``mentions_to_wikidata.json``: A dictionary that maps mentions to

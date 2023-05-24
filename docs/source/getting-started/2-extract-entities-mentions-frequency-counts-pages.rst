@@ -25,7 +25,7 @@ The script performs the following tasks:
 
 * **Divides statistics in the n-folders** constituting the output of the
   WikiExtractor and will be saved in the ``resources/wikipedia/
-  extractedResources/Store-Counts/`` folder as ``.json`` files.
+  extractedResources/Store-Counts/`` folder as JSON files.
 
 * **Counts the frequency of entities and mentions**: The script analyzes the
   processed Wikipedia data and calculates the frequency of entities and
@@ -81,8 +81,8 @@ relevant data.
 
 Step 4: Aggregate all entity and mention counts
 -----------------------------------------------
-Finally, you can aggregate all entity and mention counts in single ``.json``
-file and save them in the ``extractedResources/`` folder by running:
+Finally, you can aggregate all entity and mention counts in single JSON file
+and save them in the ``extractedResources/`` folder by running:
 
 .. code-block:: bash
 
