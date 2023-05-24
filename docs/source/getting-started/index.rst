@@ -43,8 +43,8 @@ percent encoded across all files):
     - ``entity_outlink_dict.json``: this dictionary gives you a list of pages
       linked from each Wikipedia page.
     - ``wikipedia2wikidata.json``: a dictionary mapping Wikipedia pages to
-      Wikidata ids.
-    - ``wikidata2wikipedia.json``: a dictionary mapping Wikidata ids to a list
+      Wikidata IDs.
+    - ``wikidata2wikipedia.json``: a dictionary mapping Wikidata IDs to a list
       of Wikipedia pages with associated frequency.
 
 - In ``resources/wikidata/extracted/``:
