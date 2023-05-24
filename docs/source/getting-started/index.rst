@@ -50,7 +50,8 @@ percent encoded across all files):
 - In ``resources/wikidata/extracted/``:
 
     - A list of CSV files, each containing 5,000 rows corresponding to
-      geographical entities extracted from Wikidata.
+      geographical entities extracted from Wikidata, with names following the
+      format ``till_<record ID>_item.csv``.
     - ``wikidata_gazetteer.csv``: The Wikidata-based gazetteer.
     - ``mentions_to_wikidata.json``: A dictionary that maps mentions to
       Wikidata IDs (absolute counts).
