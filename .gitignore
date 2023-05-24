@@ -134,3 +134,5 @@ resources/wikipedia/test-extractedResources/*
 resources/wikipedia/dump/*
 resources/wikidata/*
 resources/rel_db/*
+
+.vscode/*
