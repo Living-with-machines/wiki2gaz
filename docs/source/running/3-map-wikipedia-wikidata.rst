@@ -4,13 +4,12 @@
 To establish a mapping between Wikipedia pages and corresponding Wikidata
 entities, follow these steps:
 
-Step 1: Availability of Wikipedia/Wikidata Index
+Step 1: Obtain a Wikipedia/Wikidata Index
 ------------------------------------------------
-Ensure that you have access to a specific Wikipedia/Wikidata index required
-for the mapping process. This index is created by following the instructions
-outlined in `these instructions <https://www.github.com/jcklie/wikimapper#create-your-own-index>`_.
-We have previously used and tested the script with a SQL dump from
-October 2021.
+To run the next steps, you need to have access to a Wikipedia/Wikidata
+index required for the mapping process. This index is created by following 
+`these instructions <https://www.github.com/jcklie/wikimapper#create-your-own-index>`_.
+We have used a SQL dump from October 2021.
 
 Step 2: Run the Mapping Script
 ------------------------------
@@ -21,7 +20,7 @@ Wikidata entities:
 
     $ python map_wikidata_wikipedia.py
 
-The script facilitates the following:
+The script does the following:
 
 * **Lowercasing Wikipedia page titles**: To ensure consistency and improve
   matching accuracy, the script converts the Wikipedia page titles to lowercase

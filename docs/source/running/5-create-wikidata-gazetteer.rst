@@ -9,10 +9,7 @@ script:
     $ python create_wk_gazetteer.py
 
 The script handles the concatenation of CSV files, linking of alternate names
-and mentions, and calculation of entity relevance providing a comprehensive
-resource for geographic entities and their associated information.
-
-In more details, here's what the script does:
+and mentions, and calculation of entity relevance. Here's what the script does:
 
 #. The script **combines the CSV files** generated in the previous step, each
    representing geographical entities extracted from Wikidata, into a unified
@@ -38,7 +35,7 @@ In more details, here's what the script does:
 
    * **Map Wikidata IDs to Mentions**: The script generates a dictionary named
      ``wikidata_to_mentions.json`` that maps Wikidata IDs to mentions. This
-     dictionary provides the absolute count of mentions for each mention.
+     dictionary provides the absolute count of mentions for each Wikidata entity.
 
      .. code-block:: py
 
@@ -51,12 +48,11 @@ In more details, here's what the script does:
      a mention referring to a particular Wikidata ID. These dictionaries offer
      a normalized measure of association.
 
-     For example, the probability of "London in Kiribati" (``Q2477346``) of
+     For example, the probability of London in Kiribati (``Q2477346``) of
      being referred to as ``"London"`` is ``0.80``, and that's the measure we
-     are interested in here. the probability of having the London in Kiribati
-     entry given the mention ``"London"`` would be close to ``0``, because most
-     ``"London"`` mentions refer to the city in England. In this case, if we
-     used Python to look at these two dictionaries, the result would look like:
+     are interested in here (note that this is different from the probability
+     of the mention ``"London"`` referring to the location in Kiribati, which
+     is close to ``0`` because of the high prominence of the English city).
 
      .. code-block:: py
          
@@ -70,5 +66,4 @@ In more details, here's what the script does:
 
 #. The script produces a dictionary named ``overall_entity_freq_wikidata.json``
    that **maps each Wikidata entity to its overall frequency** in the Wikipedia
-   corpus. This dictionary provides insights into the relevance or prominence of
-   each entity based on its frequency of occurrence in Wikipedia.
+   corpus.

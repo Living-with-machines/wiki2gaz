@@ -39,5 +39,5 @@ for i, row in gaz.iterrows():
     if keep_most_common_class:
         dict_id_to_class[row["wikidata_id"]] = keep_most_common_class
 
-with open("../../resources/entity2class.txt", "w") as fw:
+with open("../../resources/wikidata/entity2class.txt", "w") as fw:
     fw.write(json.dumps(dict_id_to_class))

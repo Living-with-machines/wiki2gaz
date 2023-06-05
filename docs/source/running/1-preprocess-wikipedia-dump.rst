@@ -52,9 +52,3 @@ WikiExtractor tool. Follow these steps:
    .. note::
        * The ``-l`` flag keeps the links in the extracted text.
        * The ``-s`` flag retains the sections in the extracted text.
-
-Note
-----
-
-A previous version of these scripts can be found in
-`fedenanni/Reimplementing-TagMe <https://github.com/fedenanni/Reimplementing-TagMe>`_.

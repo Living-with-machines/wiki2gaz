@@ -1,7 +1,9 @@
 Welcome to Wiki2Gaz's documentation!
 ====================================
 
-Wiki2Gaz consists of seven scripts that need to be run in order.
+Wiki2Gaz is a repository that contains a series of scripts to create
+a gazetteer from a Wikipedia and Wikidata dump. Wiki2Gaz consists of
+seven steps.
 
 .. toctree::
    :maxdepth: 1
@@ -17,14 +19,14 @@ Wiki2Gaz consists of seven scripts that need to be run in order.
 
 Resulting Files
 ---------------
-These scripts will produce the following outputs (note that entities are
-percent encoded across all files):
+These steps will produce the following outputs (note that Wikipedia
+entities are percent-encoded across all files).
 
 - In ``resources/wikipedia/extractedResources/``:
 
     - A ``Pages/`` folder, containing a JSON file for each page available
       in the input Wikipedia dump. Note that due to the presence of specific
-      characters of to the length of some pages titles, some titles have been
+      characters or to the length of some pages titles, some titles have been
       hashed.
     - ``hashed_duplicates.csv``: just to check in case there are issues with
       duplicate hashed filenames. This file should remain empty.
@@ -48,11 +50,11 @@ percent encoded across all files):
     - ``wikidata2wikipedia.json``: a dictionary mapping Wikidata IDs to a list
       of Wikipedia pages with associated frequency.
 
-- In ``resources/wikidata/extracted/``:
+- In ``resources/wikidata/``:
 
-    - A list of CSV files, each containing 5,000 rows corresponding to
-      geographical entities extracted from Wikidata, with names following the
-      format ``till_<record ID>_item.csv``.
+    - An ``extracted/`` folder, containing a series of CSV files, each containing
+      5,000 rows corresponding to geographical entities extracted from Wikidata,
+      with names following the format ``till_<record ID>_item.csv``.
     - ``wikidata_gazetteer.csv``: The Wikidata-based gazetteer.
     - ``mentions_to_wikidata.json``: A dictionary that maps mentions to
       Wikidata IDs (absolute counts).
@@ -64,19 +66,19 @@ percent encoded across all files):
       IDs to mentions (normalized).
     - ``overall_entity_freq_wikidata.json``: this is a dictionary which simply
       maps a Wikidata entity to its overall frequency in the Wikipedia corpus.
-    - ``gazetteer_entity_embeddings.npy``: Wikidata embeddings of entities in
-      our gazetteer.
-    - ``gazetteer_entity_ids.txt``: Mapped Wikidata IDs of the entities in our
-      gazetteer.
-    - ``gazetteer_wkdtclass_embeddings.npy``: Wikidata embeddings of entity
-      classes in our gazetteer.
-    - ``gazetteer_wkdtclass_ids.txt``: Mapped Wikidata IDs of the entity
-      classes in our gazetteer.
+    - ``entity2class.txt``: A dictionary that maps a Wikidata ID to the most
+      common entity class.
 
 - In ``resources/``:
 
-    - ``embeddings_database.db``: A database containing GloVe and Entity
+    - ``embeddings_database.db``: A database containing GloVe and Wikipedia2vec
       embeddings.
+
+Example notebook
+----------------
+We provide a notebook that shows how some of the resources may be accessed
+and used. You will find the notebook at 
+`example.ipynb <https://github.com/Living-with-machines/wiki2gaz/blob/main/example.ipynb>`_.
 
 Credits
 -------
@@ -84,6 +86,12 @@ This repository collects a series of scripts written by Mariona Coll Ardanuy
 and Federico Nanni as part of the Living with Machines project. It was
 supported by Living with Machines (AHRC grant AH/S01179X/1) and The Alan Turing
 Institute (EPSRC grant EP/ N510129/1).
+
+Living with Machines, funded by the UK Research and Innovation (UKRI) Strategic
+Priority Fund, is a multidisciplinary collaboration delivered by the Arts and
+Humanities Research Council (AHRC), with The Alan Turing Institute, the British
+Library and Cambridge, King's College London, East Anglia, Exeter, and Queen
+Mary University of London.
 
 ..
    .. toctree::

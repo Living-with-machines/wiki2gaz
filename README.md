@@ -118,7 +118,7 @@ The following script will download [GloVe](https://nlp.stanford.edu/projects/glo
 
 ## Final outputs
 
-These scripts will produce the following outputs (note that entities are percent encoded across all files):
+These scripts will produce the following outputs (note that Wikipedia entities are percent-encoded across all files):
 
 - In `resources/wikipedia/extractedResources/`:
   - A `Pages/` folder, containing a `.json` file for each page available in the input Wikipedia dump. Note that due to the presence of specific characters of to the length of some pages titles, some titles have been hashed.
@@ -132,20 +132,17 @@ These scripts will produce the following outputs (note that entities are percent
   - `entity_outlink_dict.json`: this dictionary gives you a list of pages linked from each Wikipedia page.
   - `wikipedia2wikidata.json`: a dictionary mapping Wikipedia pages to Wikidata ids.
   - `wikidata2wikipedia.json`: a dictionary mapping Wikidata ids to a list of Wikipedia pages with associated frequency.
-- In `resources/wikidata/extracted/`:
-  - A list of `.csv` files, each containing 5,000 rows corresponding to geographical entities extracted from Wikidata.
+- In `resources/wikidata/`:
+  - An `extracted/`fodler, containing a series of `.csv` files, each containing 5,000 rows corresponding to geographical entities extracted from Wikidata.
   - `wikidata_gazetteer.csv`: The Wikidata-based gazetteer.
   - `mentions_to_wikidata.json`: A dictionary that maps mentions to Wikidata IDs (absolute counts).
   - `wikidata_to_mentions.json`: A dictionary that maps Wikidata IDs to mentions (absolute counts).
   - `mentions_to_wikidata_normalized.json`: A dictionary that maps mentions to Wikidata IDs (normalized).
   - `wikidata_to_mentions_normalized.json`: A dictionary that maps Wikidata IDs to mentions (normalized).
   - `overall_entity_freq_wikidata.json`: this is a dictionary which simply maps a Wikidata entity to its overall frequency in the Wikipedia corpus.
-  - `gazetteer_entity_embeddings.npy`: Wikidata embeddings of entities in our gazetteer.
-  - `gazetteer_entity_ids.txt`: Mapped Wikidata IDs of the entities in our gazetteer.
-  - `gazetteer_wkdtclass_embeddings.npy`: Wikidata embeddings of entity classes in our gazetteer.
-  - `gazetteer_wkdtclass_ids.txt`: Mapped Wikidata IDs of the entity classes in our gazetteer.
+  - `entity2class.txt`: A dictionary that maps Wikidata entities to their most common entity class.
 - In `resources/`:
-  - `embeddings_database.db`: A database containing GloVe and Entity embeddings.
+  - `embeddings_database.db`: A database containing GloVe and Wikipedi2vec embeddings.
 
 ## Credits
 
