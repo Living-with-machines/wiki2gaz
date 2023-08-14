@@ -1,12 +1,30 @@
 5. Create a Wikidata-based gazetteer
 ====================================
 
+By default, ``wiki2gaz`` looks for your resources directory at ``./resources``.
+After running step 4, we assume your directory set up is as follows:
+
+::
+
+    your_cwd
+    ├──wiki2gaz
+    └──resources    
+        ├── wikipedia
+        │   ├──processedWiki
+        │   └──extractedResources
+        └── wikidata
+           ├──...
+           └──extracted
+
+.. note::
+  If this is not your set up, you can use the ``-p`` flag with all scripts to set the path to your resources directory.
+
 To create a gazetteer based on Wikidata, run the ``create_wk_gazetteer.py``
 script:
 
 .. code-block:: bash
 
-    $ python create_wk_gazetteer.py
+    $ python wiki2gaz/create_wk_gazetteer.py
 
 The script handles the concatenation of CSV files, linking of alternate names
 and mentions, and calculation of entity relevance. Here's what the script does:

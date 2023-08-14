@@ -1,6 +1,25 @@
 4. Extract locations from Wikidata
 ==================================
 
+By default, ``wiki2gaz`` looks for your resources directory at ``./resources``.
+After running step 3, we assume your directory set up is as follows:
+
+::
+
+    your_cwd
+    ├──wiki2gaz
+    └──resources    
+        ├── wikipedia
+        │   ├──processedWiki
+        │   └──extractedResources
+        └── wikidata
+           ├──enwiki-latest-page.sql.gz
+           ├──...
+           └──index_enwiki-latest.db
+
+.. note::
+  If this is not your set up, you can use the ``-p`` flag with all scripts to set the path to your resources directory.
+
 To extract locations from Wikidata along with their relevant properties,
 if they have a corresponding page on Wikipedia, follow these steps:
 
@@ -16,7 +35,7 @@ Execute the provided script to extract locations from the Wikidata dump:
 
 .. code-block:: bash
 
-    $ python wikidata_extraction.py
+    $ python wiki2gaz/wikidata_extraction.py
 
 .. note::
 

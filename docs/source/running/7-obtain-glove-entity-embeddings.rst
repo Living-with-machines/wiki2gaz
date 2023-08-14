@@ -1,6 +1,24 @@
 7. Obtain GloVe and Entity Embeddings
 =====================================
 
+By default, ``wiki2gaz`` looks for your resources directory at ``./resources``.
+After running step 6, we assume your directory set up is as follows:
+
+::
+
+    your_cwd
+    ├──wiki2gaz
+    └──resources    
+        ├── wikipedia
+        │   ├──processedWiki
+        │   └──extractedResources
+        └── wikidata
+           ├──...
+           └──extracted
+
+.. note::
+  If this is not your set up, you can use the ``-p`` flag with all scripts to set the path to your resources directory.
+
 This step allows you to create a sqlite3 database which contains
 both GloVe word embeddings and Wikipedia2vec entity (represented
 by the corresponding Wikidata ID) and word embeddings. Run the
@@ -8,7 +26,7 @@ script as follows:
 
 .. code-block:: bash
 
-    $ python download_and_merge_embeddings_databases.py
+    $ python wiki2gaz/download_and_merge_embeddings_databases.py
 
 The script automates the download and aggregation of
 `GloVe <https://nlp.stanford.edu/projects/glove/>`_ embeddings and

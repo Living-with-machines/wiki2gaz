@@ -1,13 +1,28 @@
 2. Extract entities/mentions frequency counts and pages
 =======================================================
 
-Ensure that you have completed the pre-processing step for the Wikipedia dump
-using the WikiExtractor tool. The processed data should be available in the
-``resources/wikipedia/processedWiki/`` folder. To extract entity and mention
-statistics from the processed Wikipedia dump, follow these steps:
+Ensure that you have completed the pre-processing step for the Wikipedia dump 
+using the WikiExtractor tool. The processed data should be available in the ``resources/wikipedia/processedWiki/`` folder. 
+
+By default, ``wiki2gaz`` looks for your resources directory at ``./resources``.
+After running step 1, we assume your directory set up is as follows:
+
+::
+
+    your_cwd
+    ├──wiki2gaz
+    └──resources    
+        └──wikipedia
+            └──processedWiki
+
+.. note::
+  If this is not your set up, you can use the ``-p`` flag with all scripts to set the path to your resources directory.
+
+To extract entity and mention statistics from the processed Wikipedia dump, follow these steps:
 
 Step 1: Extract Entity and Mention Statistics
 ---------------------------------------------
+
 Run the script provided to extract entity and mention statistics from the
 processed Wikipedia dump, e.g., how many times the mention ``London`` is
 pointing to Wikipedia page of the capital of the UK and how many times to
@@ -15,7 +30,7 @@ pointing to Wikipedia page of the capital of the UK and how many times to
 
 .. code-block:: bash
 
-    $ python extract_freq_and_pages.py
+    $ python wiki2gaz/extract_freq_and_pages.py
 
 The script performs the following tasks:
 
@@ -48,7 +63,7 @@ Run the script provided to aggregate all entity and mention counts:
 
 .. code-block:: bash
 
-    $ python aggregate_all_counts.py
+    $ python wiki2gaz/aggregate_all_counts.py
 
 * **Generates JSON files for entity and mention statistics**: The script
   produces two JSON files:
@@ -79,6 +94,7 @@ Run the script provided to aggregate all entity and mention counts:
     `fedenanni/Reimplementing-TagMe <https://github.com/fedenanni/Reimplementing-TagMe>`_.
 
 Output files
-------------------------
+-------------
+
 After running the script, you will find the generated output files in the
 ``resources/wikipedia/extractedResources/`` folder.
