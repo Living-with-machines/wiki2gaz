@@ -3,6 +3,7 @@ import json
 import pandas as pd
 import pydash
 from tqdm import tqdm
+import os
 import pathlib
 import glob
 import re
@@ -21,17 +22,19 @@ parser.add_argument(
     help="Run in test mode.",
     default="True",
 )
+parser.add_argument("-p","--path", dest="path", help="path to resources directory", action="store", type=str, default="./resources/")
 
 args = parser.parse_args()
 
+resources_dir = args.path
 # ------------------------------------------
 # Wikidata input dump file and output processed files:
-input_path = r"resources/wikidata/"
-output_path = r"resources/wikidata/extracted/"
-wikimapper_path = r"resources/wikipedia/extractedResources/"
+input_path = os.path.join(resources_dir, "wikidata/")
+output_path = os.path.join(resources_dir, "wikidata/extracted/")
+wikimapper_path = os.path.join(resources_dir, "wikipedia/extractedResources/")
 
 if args.test == "True":
-    output_path = r"resources/wikidata/test-extracted/"
+    output_path = os.path.join(resources_dir, "wikidata/test-extracted/")
     print("Running in test mode, set -t to False to disable the test mode.")
 
 pathlib.Path(output_path).mkdir(parents=True, exist_ok=True)

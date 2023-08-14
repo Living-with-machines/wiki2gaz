@@ -2,8 +2,17 @@ import pandas as pd
 from ast import literal_eval
 import json
 from collections import Counter
+from argparse import ArgumentParser
+import os
 
-gaz = pd.read_csv("../../resources/wikidata/wikidata_gazetteer.csv", low_memory=False)
+parser = ArgumentParser()
+parser.add_argument("-p","--path", dest="path", help="path to resources directory", action="store", type=str, default="./resources/")
+
+args = parser.parse_args()
+
+resources_dir = args.path
+
+gaz = pd.read_csv(os.path.join(resources_dir,"wikidata/wikidata_gazetteer.csv"), low_memory=False)
 gazetteer_ids = set(gaz.wikidata_id)
 
 
@@ -39,5 +48,5 @@ for i, row in gaz.iterrows():
     if keep_most_common_class:
         dict_id_to_class[row["wikidata_id"]] = keep_most_common_class
 
-with open("../../resources/wikidata/entity2class.txt", "w") as fw:
+with open(os.path.join(resources_dir,"wikidata/entity2class.txt"), "w") as fw:
     fw.write(json.dumps(dict_id_to_class))
