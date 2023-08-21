@@ -22,10 +22,16 @@ Step 1: Obtain a Wikipedia/Wikidata Index
 ------------------------------------------------
 To run the next steps, you need to have access to a Wikipedia/Wikidata
 index required for the mapping process. This index is created by following 
-`these instructions <https://www.github.com/jcklie/wikimapper#create-your-own-index>`_.
+`these instructions <https://www.github.com/jcklie/wikimapper#create-your-own-index>`_: 
+
+.. code-block:: bash
+
+    $ wikimapper download enwiki-latest --dir ./resources/wikidata
+    $ wikimapper create enwiki-latest --dumpdir ./resources/wikidata --target ./resources/wikidata/index_enwiki-latest.db
+
 We have used a SQL dump from October 2021.
 
-.. note:: wiki2gaz will expect your Wikidata to be saved in "./resources/wikidata/". You should rename your 'data' directory to align to this.
+.. note:: wiki2gaz will expect your Wikidata to be saved in "./resources/wikidata/".
 
 Step 2: Run the Mapping Script
 ------------------------------

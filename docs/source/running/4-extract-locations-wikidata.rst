@@ -29,6 +29,10 @@ Download a full Wikidata dump file ``latest-all.json.bz2`` from the
 `Wikimedia's dump directory <https://dumps.wikimedia.org/wikidatawiki/entities>`_,
 and store it in the ``resources/wikidata/`` directory.
 
+.. code-block:: bash
+
+    $ wget -P ./resources/wikidata/ https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.json.bz2
+
 Step 2: Run the Extraction Script
 ---------------------------------
 Execute the provided script to extract locations from the Wikidata dump:

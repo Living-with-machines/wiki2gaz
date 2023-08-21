@@ -7,8 +7,12 @@ Step 1: Download the Wikipedia Dump
 -----------------------------------
 
 Start by downloading a Wikipedia dump file. In our example, we use the
-``enwiki-20211001`` dump. You can obtain the dump file from
+``enwiki-20211001`` dump (``enwiki-20211001-pages-articles-multistream.xml.bz2``). You can obtain the dump file from
 `Wikimedia <https://dumps.wikimedia.org/enwiki>`_.
+
+.. code-block::
+
+    $ wget https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles-multistream.xml.bz2
 
 Step 2: Process the Dump with WikiExtractor
 -------------------------------------------
