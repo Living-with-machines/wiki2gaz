@@ -492,7 +492,7 @@ if os.path.exists("embedding_database.db"):
     os.remove("embedding_database.db")
 
 # Connect to the new embedding database
-dest_conn = sqlite3.connect(os.path.join(resources_dir,"embeddings_database.db"))
+dest_conn = sqlite3.connect(os.path.join(resources_dir,"rel_db", "embeddings_database.db"))
 
 # Create a new table to store the embeddings
 dest_conn.execute(

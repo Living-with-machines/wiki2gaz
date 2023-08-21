@@ -33,7 +33,7 @@ The script automates the download and aggregation of
 embeddings from the `Radboud Entity Linker (REL) <https://github.com/informagi/REL>`_.
 
 The script merges the embeddings into a single database called
-``resources/embeddings_database.db``, in two different tables:
+``resources/rel_db/embeddings_database.db``, in two different tables:
 ``glove_embeddings`` (containing GloVe word embeddings) and
 ``entity_embeddings`` (containing Wikipedia2vec entity and word
 embeddings).
