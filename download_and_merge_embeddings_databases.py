@@ -488,8 +488,8 @@ words = [x for x in keys if not x.startswith("ENTITY/")]
 filtered_emb_keys = words + list(wikidata_entities.keys())
 
 # Check if the embedding database file already exists, and if it does, delete it
-if os.path.exists("embedding_database.db"):
-    os.remove("embedding_database.db")
+if os.path.exists(os.path.join(resources_dir,"rel_db","embeddings_database.db")):
+    os.remove(os.path.join(resources_dir,"rel_db","embeddings_database.db"))
 
 # Connect to the new embedding database
 dest_conn = sqlite3.connect(os.path.join(resources_dir,"rel_db", "embeddings_database.db"))
@@ -521,7 +521,7 @@ for emb_key in filtered_emb_keys:
 dest_conn.execute("CREATE INDEX entity_index ON entity_embeddings (word)")
 
 # Attach the common crawl database and create a new table to store its embeddings
-dest_conn.execute(f"ATTACH DATABASE '{os.path.join(resources_dir,'/rel_db/generic/common_crawl.db')}' AS common_crawl;")
+dest_conn.execute(f"ATTACH DATABASE '{os.path.join(resources_dir,'rel_db/generic/common_crawl.db')}' AS common_crawl;")
 dest_conn.execute(
     """CREATE TABLE glove_embeddings
              (word TEXT,
