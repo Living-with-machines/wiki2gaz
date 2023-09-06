@@ -5,7 +5,15 @@ import glob
 import pandas as pd
 from pathlib import Path
 from ast import literal_eval
+from argparse import ArgumentParser
+import os
 
+parser = ArgumentParser()
+parser.add_argument("-p","--path", dest="path", help="path to resources directory", action="store", type=str, default="./resources/")
+
+args = parser.parse_args()
+
+resources_dir = args.path
 
 # ---------------
 # 1. WIKIDATA GAZETTEER
@@ -14,7 +22,7 @@ from ast import literal_eval
 
 # Load Wikidata resource:
 print("Loading the wikidata gazetteer.")
-wikidata_path = "resources/wikidata/"
+wikidata_path = os.path.join(resources_dir, "wikidata/")
 df = pd.DataFrame()
 if not Path(wikidata_path + "wikidata_gazetteer.csv").exists():
     all_files = glob.glob(wikidata_path + "extracted/*.csv")
@@ -44,7 +52,7 @@ if not Path(wikidata_path + "mentions_to_wikidata.json").exists():
     # ---------------
 
     # Load Wikipedia resources:
-    wikipedia_path = "resources/wikipedia/extractedResources/"
+    wikipedia_path = os.path.join(resources_dir, "wikipedia/extractedResources/")
 
     print("Loading mention_overall_dict.")
     with open(wikipedia_path + "mention_overall_dict.json", "r") as f:
@@ -193,7 +201,7 @@ if not Path(wikidata_path + "mentions_to_wikidata.json").exists():
 if not Path(wikidata_path + "overall_entity_freq_wikidata.json").exists():
     print("Creating the wikidata overall frequency dictionary.")
 
-    wikipedia_path = "/resources/wikipedia/extractedResources/"
+    wikipedia_path = os.path.join(resources_dir, "wikipedia/extractedResources/")
 
     with open(wikipedia_path + "overall_entity_freq.json", "r") as f:
         overall_entity_freq = json.load(f)

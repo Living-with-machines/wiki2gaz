@@ -17,17 +17,20 @@ from utils import process_wikipedia
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-t", "--test", dest="test", help="run in test mode", action="store_true")
+    parser.add_argument("-p","--path", dest="path", help="path to resources directory", action="store", type=str, default="./resources/")
 
     args = parser.parse_args()
 
+    resources_dir = args.path
+
     # this is where we have stored the output of the WikiExtractor
     if args.test:
-        path = "resources/wikipedia/test-extractedResources/"
-        processed_docs = "resources/wikipedia/test-processedWiki/"
+        path = os.path.join(resources_dir,"wikipedia/test-extractedResources/")
+        processed_docs = os.path.join(resources_dir,"wikipedia/test-processedWiki/")
 
     else:
-        path = "resources/wikipedia/extractedResources/"
-        processed_docs = "resources/wikipedia/processedWiki/"
+        path = os.path.join(resources_dir,"wikipedia/extractedResources/")
+        processed_docs = os.path.join(resources_dir,"wikipedia/processedWiki/")
 
     if pathlib.Path(processed_docs).is_dir() == False:
         print("Error! You need a processed dump in " + processed_docs)

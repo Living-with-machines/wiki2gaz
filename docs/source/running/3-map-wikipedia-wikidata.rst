@@ -1,15 +1,37 @@
 3. Map Wikipedia and Wikidata
 =============================
 
-To establish a mapping between Wikipedia pages and corresponding Wikidata
-entities, follow these steps:
+By default, ``wiki2gaz`` looks for your resources directory at ``./resources``.
+After running step 2, we assume your directory set up is as follows:
+
+::
+
+    your_cwd
+    ├──wiki2gaz
+    └──resources    
+        └── wikipedia
+            ├──processedWiki
+            └──extractedResources
+
+.. note::
+  If this is not your set up, you can use the ``-p`` flag with all scripts to set the path to your resources directory.
+
+To establish a mapping between Wikipedia pages and corresponding Wikidata entities, follow these steps:
 
 Step 1: Obtain a Wikipedia/Wikidata Index
 ------------------------------------------------
 To run the next steps, you need to have access to a Wikipedia/Wikidata
 index required for the mapping process. This index is created by following 
-`these instructions <https://www.github.com/jcklie/wikimapper#create-your-own-index>`_.
+`these instructions <https://www.github.com/jcklie/wikimapper#create-your-own-index>`_: 
+
+.. code-block:: bash
+
+    $ wikimapper download enwiki-latest --dir ./resources/wikidata
+    $ wikimapper create enwiki-latest --dumpdir ./resources/wikidata --target ./resources/wikidata/index_enwiki-latest.db
+
 We have used a SQL dump from October 2021.
+
+.. note:: wiki2gaz will expect your Wikidata to be saved in "./resources/wikidata/".
 
 Step 2: Run the Mapping Script
 ------------------------------
@@ -18,7 +40,7 @@ Wikidata entities:
 
 .. code-block:: bash
 
-    $ python map_wikidata_wikipedia.py
+    $ python wiki2gaz/map_wikidata_wikipedia.py
 
 The script does the following:
 

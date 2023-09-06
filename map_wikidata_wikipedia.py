@@ -17,29 +17,28 @@ parser = ArgumentParser()
 parser.add_argument(
     "-t", "--test", dest="test", help="run in test mode", action="store_true"
 )
+parser.add_argument("-p","--path", dest="path", help="path to resources directory", action="store", type=str, default="./resources/")
 
 args = parser.parse_args()
 
-if args.test:
-    path = "resources/wikipedia/test-extractedResources/"
+resources_dir = args.path
 
+if args.test:
+    path = os.path.join(resources_dir,"wikipedia/test-extractedResources/")
 else:
-    path = "resources/wikipedia/extractedResources/"
+    path = os.path.join(resources_dir,"wikipedia/extractedResources/")
 
 # https://github.com/jcklie/wikimapper#create-your-own-index
-mapper = "resources/wikidata/index_enwiki-latest.db"
 
 if pathlib.Path(path).is_dir() == False:
     print("Error! You need to have extracted entity and mention counts in " + path)
     exit()
 
-
 # we take the list of available entities
 with open(path + "overall_entity_freq.json", "r") as f:
     overall_entity_freq = json.load(f)
 
-
-mapper = "resources/wikidata/index_enwiki-latest.db"
+mapper = os.path.join(resources_dir, "wikidata/index_enwiki-latest.db")
 
 with sqlite3.connect(mapper) as conn:
     c = conn.cursor()

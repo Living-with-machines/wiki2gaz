@@ -15,13 +15,16 @@ from utils import process_wikipedia
 
 parser = ArgumentParser()
 parser.add_argument("-t", "--test", dest="test", help="run in test mode", action="store_true")
+parser.add_argument("-p","--path", dest="path", help="path to resources directory", action="store", type=str, default="./resources/")
 
 args = parser.parse_args()
 
+resources_dir = args.path
+
 if args.test:
-    path = "resources/wikipedia/test-extractedResources/"
+    path = os.path.join(resources_dir,"wikipedia/test-extractedResources/")
 else:
-    path = "resources/wikipedia/extractedResources/"
+    path = os.path.join(resources_dir,"wikipedia/extractedResources/")
 
 if pathlib.Path(path).is_dir() == False:
     print("Error! You need to have extracted entity and mention counts in " + path)

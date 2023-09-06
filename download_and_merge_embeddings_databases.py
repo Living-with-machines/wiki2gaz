@@ -9,36 +9,43 @@ import tarfile
 import wget
 import zipfile
 import io
+from argparse import ArgumentParser
+import os
 
 # Check if entity embeddings exist otherwise download them:
 
-resources_path = "resources/"
+parser = ArgumentParser()
+parser.add_argument("-p","--path", dest="path", help="path to resources directory", action="store", type=str, default="./resources/")
 
-if not os.path.exists(resources_path + "rel_db/"):
-    os.makedirs(resources_path + "rel_db/")
+args = parser.parse_args()
 
-if not os.path.exists(resources_path + "rel_db/wiki_2019/"):
+resources_dir = args.path
+
+if not os.path.exists(os.path.join(resources_dir,"rel_db/")):
+    os.makedirs(os.path.join(resources_dir,"rel_db/"))
+
+if not os.path.exists(os.path.join(resources_dir,"rel_db/wiki_2019/")):
     wget.download(
         "http://gem.cs.ru.nl/wiki_2019.tar.gz",
-        resources_path + "rel_db/",
+        os.path.join(resources_dir,"rel_db/"),
     )
-    tar = tarfile.open(resources_path + "rel_db/wiki_2019.tar.gz")
-    tar.extractall(resources_path + "rel_db/")
+    tar = tarfile.open(os.path.join(resources_dir,"rel_db/wiki_2019.tar.gz"))
+    tar.extractall(os.path.join(resources_dir,"rel_db/"))
     tar.close()
 
 # Check if glove embeddings exist otherwise download them:
-if not os.path.exists(resources_path + "rel_db/generic/"):
-    os.makedirs(resources_path + "rel_db/generic/")
+if not os.path.exists(os.path.join(resources_dir,"rel_db/generic/")):
+    os.makedirs(os.path.join(resources_dir,"rel_db/generic/"))
 
-if not os.path.isfile(resources_path + "rel_db/generic/common_crawl.db"):
-    if not os.path.isfile(resources_path + "rel_db/generic/glove.840B.300d.zip"):
+if not os.path.isfile(os.path.join(resources_dir,"rel_db/generic/common_crawl.db")):
+    if not os.path.isfile(os.path.join(resources_dir,"rel_db/generic/glove.840B.300d.zip")):
         print("Downloading Glove Embeddings")
         wget.download(
             "https://nlp.stanford.edu/data/glove.840B.300d.zip",
-            resources_path + "rel_db/generic/",
+            os.path.join(resources_dir,"rel_db/generic/"),
         )
 
-    with zipfile.ZipFile(resources_path + "rel_db/generic/glove.840B.300d.zip", "r") as zip_file:
+    with zipfile.ZipFile(os.path.join(resources_dir,"rel_db/generic/glove.840B.300d.zip"), "r") as zip_file:
         # Get the name of the file inside the zip
         file_name = zip_file.namelist()[0]
 
@@ -359,7 +366,7 @@ if not os.path.isfile(resources_path + "rel_db/generic/common_crawl.db"):
                 embeddings[word] = embedding
 
     # Set up a connection to SQLite
-    conn = sqlite3.connect(resources_path + "rel_db/generic/common_crawl.db")
+    conn = sqlite3.connect(os.path.join(resources_dir,"rel_db/generic/common_crawl.db"))
     c = conn.cursor()
 
     # Create a table to store the embeddings
@@ -382,7 +389,7 @@ if not os.path.isfile(resources_path + "rel_db/generic/common_crawl.db"):
 
 # Load the gazetteer file
 gaz = pd.read_csv(
-    resources_path + "wikidata/extracted/wikidata_gazetteer.csv",
+    os.path.join(resources_dir,"wikidata/wikidata_gazetteer.csv"),
     usecols=["wikidata_id"],
 )
 
@@ -391,7 +398,7 @@ gaz = set(gaz["wikidata_id"].to_list())
 
 
 # Connect to the entity word embedding database
-conn = sqlite3.connect(resources_path + "rel_db/wiki_2019/generated/entity_word_embedding.db")
+conn = sqlite3.connect(os.path.join(resources_dir,"rel_db/wiki_2019/generated/entity_word_embedding.db"))
 
 # Execute a SELECT statement to retrieve all elements in a column
 table_name = "embeddings"
@@ -467,7 +474,7 @@ def parallel_process(entities, num_processes, path_to_db):
 
 
 # Set the path to the Wikipedia/Wikidata index database
-path_to_db = resources_path + "wikidata/index_enwiki-latest.db"
+path_to_db = os.path.join(resources_dir,"wikidata/index_enwiki-latest.db")
 # Set the number of processes to use in parallel
 num_processes = 12
 
@@ -481,11 +488,11 @@ words = [x for x in keys if not x.startswith("ENTITY/")]
 filtered_emb_keys = words + list(wikidata_entities.keys())
 
 # Check if the embedding database file already exists, and if it does, delete it
-if os.path.exists("embedding_database.db"):
-    os.remove("embedding_database.db")
+if os.path.exists(os.path.join(resources_dir,"rel_db","embeddings_database.db")):
+    os.remove(os.path.join(resources_dir,"rel_db","embeddings_database.db"))
 
 # Connect to the new embedding database
-dest_conn = sqlite3.connect(resources_path + "embeddings_database.db")
+dest_conn = sqlite3.connect(os.path.join(resources_dir,"rel_db", "embeddings_database.db"))
 
 # Create a new table to store the embeddings
 dest_conn.execute(
@@ -514,7 +521,7 @@ for emb_key in filtered_emb_keys:
 dest_conn.execute("CREATE INDEX entity_index ON entity_embeddings (word)")
 
 # Attach the common crawl database and create a new table to store its embeddings
-dest_conn.execute("ATTACH DATABASE 'resources/rel_db/generic/common_crawl.db' AS common_crawl;")
+dest_conn.execute(f"ATTACH DATABASE '{os.path.join(resources_dir,'rel_db/generic/common_crawl.db')}' AS common_crawl;")
 dest_conn.execute(
     """CREATE TABLE glove_embeddings
              (word TEXT,
