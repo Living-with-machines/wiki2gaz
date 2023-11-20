@@ -70,22 +70,26 @@ if __name__ == "__main__":
             # hashing the title and checking if too long or containing /
 
             # we % encode the title, so it's consistent with the entities formats in the stored json files
-            percent_encoded_title = urllib.parse.quote(page_with_sect["title"])
+            try:
+                percent_encoded_title = urllib.parse.quote(page_with_sect["title"])
 
-            if "/" in percent_encoded_title or len(percent_encoded_title) > 200:
-                percent_encoded_title = hashlib.sha224(
-                    percent_encoded_title.encode("utf-8")
-                ).hexdigest()
-                # just checking if there are multiple titles with the same hash (it should not happen)
-                if percent_encoded_title + ".json" in set(os.listdir(path + "Pages/")):
-                    out.write(page_with_sect["title"] + "," + percent_encoded_title + "\n")
-                    continue
+                if "/" in percent_encoded_title or len(percent_encoded_title) > 200:
+                    percent_encoded_title = hashlib.sha224(
+                        percent_encoded_title.encode("utf-8")
+                    ).hexdigest()
+                    # just checking if there are multiple titles with the same hash (it should not happen)
+                    if percent_encoded_title + ".json" in set(os.listdir(path + "Pages/")):
+                        out.write(page_with_sect["title"] + "," + percent_encoded_title + "\n")
+                        continue
 
-            sections = page_with_sect["sections"]
+                sections = page_with_sect["sections"]
 
-            # saving the page with sections
-            with open(path + "Pages/" + percent_encoded_title + ".json", "w") as fp:
-                json.dump(sections, fp)
+                # saving the page with sections
+                with open(path + "Pages/" + percent_encoded_title + ".json", "w") as fp:
+                    json.dump(sections, fp)
+            
+            except KeyError:
+                continue
 
         # storing counts, still divided in folders
         with open(path + "Store-Counts/" + str(i) + ".json", "w") as fp:
