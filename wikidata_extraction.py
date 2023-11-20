@@ -207,7 +207,7 @@ def parse_record(record):
     # ==========================================
     # Store records in a dictionary
     # ==========================================
-    df_record = {
+    dict_record = {
         "wikidata_id": wikidata_id,
         "english_label": english_label,
         "instance_of": instance_of,
@@ -218,6 +218,9 @@ def parse_record(record):
         "latitude": latitude,
         "longitude": longitude,
     }
+
+    df_record = pd.DataFrame.from_dict(dict_record, orient="index").T
+
     return df_record
 
 
@@ -253,7 +256,7 @@ for record in tqdm(wikidata(input_path + "latest-all.json.bz2")):
             # Store records in a csv
             # ==========================================
             df_record = parse_record(record)
-            df_record_all = df_record_all.append(df_record, ignore_index=True)
+            df_record_all = pd.concat([df_record_all, df_record], ignore_index=True)
             i += 1
             if i % 5000 == 0:
                 pd.DataFrame.to_csv(
