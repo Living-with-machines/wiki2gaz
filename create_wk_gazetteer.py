@@ -85,23 +85,33 @@ if not Path(wikidata_path + "mentions_to_wikidata.json").exists():
     wikidata_altnames = dict()
     for i, row in df.iterrows():
         wk = row["wikidata_id"]
-        alias_dict = literal_eval(row["alias_dict"])
+        try: 
+            alias_dict = literal_eval(row["alias_dict"])
+        except ValueError:
+            continue
+        
         for lang in alias_dict:
             for al in alias_dict[lang]:
                 if al in wikidata_altnames:
                     wikidata_altnames[al].append(wk)
                 else:
                     wikidata_altnames[al] = [wk]
+        
         if row["english_label"] in wikidata_altnames:
             wikidata_altnames[row["english_label"]].append(wk)
         else:
             wikidata_altnames[row["english_label"]] = [wk]
+        
         if type(row["nativelabel"]) == list:
-            for nl in literal_eval(row["nativelabel"]):
-                if nl in wikidata_altnames:
-                    wikidata_altnames[nl].append(wk)
-                else:
-                    wikidata_altnames[nl] = [wk]
+            try:
+                for nl in literal_eval(row["nativelabel"]):
+                    if nl in wikidata_altnames:
+                        wikidata_altnames[nl].append(wk)
+                    else:
+                        wikidata_altnames[nl] = [wk]
+            except ValueError:
+                continue
+
     wikidata_altnames_counter = dict()
     for aln in wikidata_altnames:
         wikidata_altnames_counter[aln] = Counter(wikidata_altnames[aln])
