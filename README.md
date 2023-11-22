@@ -1,16 +1,21 @@
 # Overview
 
-These scripts process a Wikipedia dump, extracting and structuring:
-- pages
-- mention/entity statistics 
-- in- /out-link information 
-- and provides an alignment between Wikipedia pages and Wikidata IDs.
+These scripts create a series of Wiki-based resources used for different geographic entity linking tasks in the Living with Machines project.
 
+The scripts should be run sequentially:
+1. [Process a Wikipedia dump and structure its pages](#1-pre-process-a-wikipedia-dump)
+2. [Extract entities and mentions counts and statistics](#2-extract-entitiesmentions-frequency-counts-and-pages)
+3. [Build a Wikipedia to Wikidata mapping](#3-map-wikipedia-and-wikidata)
+4. [Extract locations from a Wikidata dump](#4-extract-locations-from-wikidata)
+5. [Create a Wikidata-based gazetteer and mention-to-entity resources](#5-create-a-wikidata-based-gazetteer)
+6. [Map Wikidata entities to most common classes](#6-map-wikidata-entities-to-classes)
+7. [Obtain Glove and Wikipedia/Wikidata word and entity embeddings](#7-obtain-glove-and-entity-embeddings)
+
+Note that some of these scripts will take a long time to run.
 
 ## 1. Pre-process a Wikipedia Dump
 
 First, download a Wikipedia dump from [here](https://dumps.wikimedia.org/enwiki/) (we used `enwiki-20211001`). Then process it with the [WikiExtractor](http://medialab.di.unipi.it/wiki/Wikipedia_Extractor) and store it into the `resources/wikipedia/processedWiki/` folder. As in the current version of the WikiExtractor the possibility of keeping sections is not offered anymore, we have used [this version](https://github.com/attardi/wikiextractor/tree/e4abb4cbd019b0257824ee47c23dd163919b731b) of the code from March 2020. To obtain it:
-
 ```
 git clone https://github.com/attardi/wikiextractor.git
 cd wikiextractor
@@ -18,7 +23,6 @@ git checkout e4abb4cbd019b0257824ee47c23dd163919b731b
 ```
 
 Then you can run the tool with the following command:
-
 ```
 python WikiExtractor.py -l -s -o ../resources/wikipedia/processedWiki/ [here put the path to the Wikipedia Dump .xml.bz2]
 ```
@@ -28,7 +32,6 @@ Note that the flag -s will keep the sections and the flag -l the links. A previo
 ## 2. Extract entities/mentions frequency counts and pages
 
 Having the Wiki dump processed by the WikiExtractor in the `resources/wikipedia/processedWiki/` folder, the first step is to extract entity and mention statistics (e.g., how many times the mention `London` is pointing to Wikipedia page of the capital of the UK and how many times to `London,_Ontario`). Statistics are still divided in the n-folders consituting the output of the WikiExtractor and will be saved in the `resources/wikipedia/extractedResources/Store-Counts/` folder as json files. The script will also store a .json file for each entity, with all its aspects (i.e., sections, see [here](https://madoc.bib.uni-mannheim.de/49596/1/EAL.pdf) to know more about Entity-Aspect Linking) in the `Pages/` folder. You should run the script as:
-
 ```
 python extract_freq_and_pages.py
 ```
@@ -64,7 +67,6 @@ The script assumes that you have already downloaded a full Wikidata dump (`lates
 By default, the script runs on test mode. You can change this behaviour by setting `-t` to `'False'`. Beware that this step will take about 2 full days.
 
 The output is in the form of `.csv` files that will be created in `resources/wikidata/extracted/`, each containing 5,000 rows corresponding to geographical entities extracted from Wikidata (if they have a corresponding Wikipedia page) with the following fields (corresponding to wikidata properties, e.g. `P7959` for [historical county](https://www.wikidata.org/wiki/Property:P7959); a description of each can be found as comments in the [code](wikidata_extraction.py#L91-L393)):
-
 ```
 'wikidata_id', 'english_label', 'instance_of', 'description_set', 'alias_dict', 'nativelabel', 'population_dict', 'area', 'hcounties', 'date_opening', 'date_closing': date_closing, 'inception_date', 'dissolved_date', 'follows', 'replaces', 'adm_regions', 'countries', 'continents', 'capital_of', 'borders', 'near_water', 'latitude', 'longitude', 'wikititle', 'geonamesIDs', 'connectswith', 'street_address', 'street_located', 'postal_code'
 ```
@@ -72,7 +74,6 @@ The output is in the form of `.csv` files that will be created in `resources/wik
 ## 5. Create a Wikidata-based gazetteer
 
 The following script creates the gazetteer.
-
 ```
 python create_wk_gazetteer.py
 ```
@@ -90,7 +91,7 @@ To create the gazetteer, it follows these steps:
       >>> data["Q84"]
       {'London': 76938, 'City of London': 1, ...}
       ```
-    * `mentions_to_wikidata_normalized.json`: For a given mention, each Wikidata ID is provided with the probability of it being referred to by such mention (being referred to by this is not the same as how likely a wikipedia ID is given a certain mention. I.e. the probability of London in Kiribati (Q2477346) of being referred to as "London" is 0.80, and that's the measure we are interested in here; the probability of having the London in Kiribati entry given the mention "London" would be close to 0, because most "London" mentions refer to the city in England, for example:
+    * `mentions_to_wikidata_normalized.json`: For a given mention, each Wikidata ID is provided with the probability of it being referred to by such mention. I.e. the probability of London in Kiribati (Q2477346) of being referred to as "London" is 0.80, and that's the measure we are interested in here; the probability of having the London in Kiribati entry given the mention "London" would be close to 0, because most "London" mentions refer to the city in England, for example:
       ```
       >>> data["London"]
       {'Q84': 0.9762342820164698, 'Q170027': 0.02005083309799492, ...}
@@ -105,12 +106,11 @@ To create the gazetteer, it follows these steps:
 ## 6. Map Wikidata entities to classes
 
 The following scripts maps Wikidata entities to their most relevant class:
-
 ```
 python produce_entity2class_dict.py
 ```
 
-The resulting mapping is stored as a dictionary a `resources/entity2class.txt`.
+The resulting mapping is stored as a dictionary in `resources/entity2class.txt`.
 
 ## 7. Obtain GloVe and Entity Embeddings  
 
@@ -118,7 +118,7 @@ The following script will download [GloVe](https://nlp.stanford.edu/projects/glo
 
 ## Final outputs
 
-These scripts will produce the following outputs (note that entities are percent encoded across all files):
+These scripts will produce the following outputs (note that Wikipedia entities are percent-encoded across all files):
 
 - In `resources/wikipedia/extractedResources/`:
   - A `Pages/` folder, containing a `.json` file for each page available in the input Wikipedia dump. Note that due to the presence of specific characters of to the length of some pages titles, some titles have been hashed.
@@ -132,20 +132,17 @@ These scripts will produce the following outputs (note that entities are percent
   - `entity_outlink_dict.json`: this dictionary gives you a list of pages linked from each Wikipedia page.
   - `wikipedia2wikidata.json`: a dictionary mapping Wikipedia pages to Wikidata ids.
   - `wikidata2wikipedia.json`: a dictionary mapping Wikidata ids to a list of Wikipedia pages with associated frequency.
-- In `resources/wikidata/extracted/`:
-  - A list of `.csv` files, each containing 5,000 rows corresponding to geographical entities extracted from Wikidata.
+- In `resources/wikidata/`:
+  - An `extracted/`fodler, containing a series of `.csv` files, each containing 5,000 rows corresponding to geographical entities extracted from Wikidata.
   - `wikidata_gazetteer.csv`: The Wikidata-based gazetteer.
   - `mentions_to_wikidata.json`: A dictionary that maps mentions to Wikidata IDs (absolute counts).
   - `wikidata_to_mentions.json`: A dictionary that maps Wikidata IDs to mentions (absolute counts).
   - `mentions_to_wikidata_normalized.json`: A dictionary that maps mentions to Wikidata IDs (normalized).
   - `wikidata_to_mentions_normalized.json`: A dictionary that maps Wikidata IDs to mentions (normalized).
   - `overall_entity_freq_wikidata.json`: this is a dictionary which simply maps a Wikidata entity to its overall frequency in the Wikipedia corpus.
-  - `gazetteer_entity_embeddings.npy`: Wikidata embeddings of entities in our gazetteer.
-  - `gazetteer_entity_ids.txt`: Mapped Wikidata IDs of the entities in our gazetteer.
-  - `gazetteer_wkdtclass_embeddings.npy`: Wikidata embeddings of entity classes in our gazetteer.
-  - `gazetteer_wkdtclass_ids.txt`: Mapped Wikidata IDs of the entity classes in our gazetteer.
+  - `entity2class.txt`: A dictionary that maps Wikidata entities to their most common entity class.
 - In `resources/`:
-  - `embeddings_database.db`: A database containing GloVe and Entity embeddings.
+  - `embeddings_database.db`: A database containing GloVe and Wikipedi2vec embeddings.
 
 ## Credits
 

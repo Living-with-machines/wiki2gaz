@@ -70,11 +70,14 @@ def process_doc(filename):
     content = BeautifulSoup(content, "html.parser").findAll("doc")
     pages = []
     for page in content:
-        title = page["title"]
-        title = make_wikilinks_consistent(title)
-        sections = {"title": title, "sections": get_sections(page)}
-        r = [title] + clean_page(page) + [sections]
-        pages.append([r])
+        try:
+            title = page["title"]
+            title = make_wikilinks_consistent(title)
+            sections = {"title": title, "sections": get_sections(page)}
+            r = [title] + clean_page(page) + [sections]
+            pages.append([r])
+        except KeyError:
+            continue
     return pages
 
 

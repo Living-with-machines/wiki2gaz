@@ -17,17 +17,20 @@ from utils import process_wikipedia
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-t", "--test", dest="test", help="run in test mode", action="store_true")
+    parser.add_argument("-p","--path", dest="path", help="path to resources directory", action="store", type=str, default="./resources/")
 
     args = parser.parse_args()
 
+    resources_dir = args.path
+
     # this is where we have stored the output of the WikiExtractor
     if args.test:
-        path = "resources/wikipedia/test-extractedResources/"
-        processed_docs = "resources/wikipedia/test-processedWiki/"
+        path = os.path.join(resources_dir,"wikipedia/test-extractedResources/")
+        processed_docs = os.path.join(resources_dir,"wikipedia/test-processedWiki/")
 
     else:
-        path = "resources/wikipedia/extractedResources/"
-        processed_docs = "resources/wikipedia/processedWiki/"
+        path = os.path.join(resources_dir,"wikipedia/extractedResources/")
+        processed_docs = os.path.join(resources_dir,"wikipedia/processedWiki/")
 
     if pathlib.Path(processed_docs).is_dir() == False:
         print("Error! You need a processed dump in " + processed_docs)
@@ -67,22 +70,26 @@ if __name__ == "__main__":
             # hashing the title and checking if too long or containing /
 
             # we % encode the title, so it's consistent with the entities formats in the stored json files
-            percent_encoded_title = urllib.parse.quote(page_with_sect["title"])
+            try:
+                percent_encoded_title = urllib.parse.quote(page_with_sect["title"])
 
-            if "/" in percent_encoded_title or len(percent_encoded_title) > 200:
-                percent_encoded_title = hashlib.sha224(
-                    percent_encoded_title.encode("utf-8")
-                ).hexdigest()
-                # just checking if there are multiple titles with the same hash (it should not happen)
-                if percent_encoded_title + ".json" in set(os.listdir(path + "Pages/")):
-                    out.write(page_with_sect["title"] + "," + percent_encoded_title + "\n")
-                    continue
+                if "/" in percent_encoded_title or len(percent_encoded_title) > 200:
+                    percent_encoded_title = hashlib.sha224(
+                        percent_encoded_title.encode("utf-8")
+                    ).hexdigest()
+                    # just checking if there are multiple titles with the same hash (it should not happen)
+                    if percent_encoded_title + ".json" in set(os.listdir(path + "Pages/")):
+                        out.write(page_with_sect["title"] + "," + percent_encoded_title + "\n")
+                        continue
 
-            sections = page_with_sect["sections"]
+                sections = page_with_sect["sections"]
 
-            # saving the page with sections
-            with open(path + "Pages/" + percent_encoded_title + ".json", "w") as fp:
-                json.dump(sections, fp)
+                # saving the page with sections
+                with open(path + "Pages/" + percent_encoded_title + ".json", "w") as fp:
+                    json.dump(sections, fp)
+            
+            except KeyError:
+                continue
 
         # storing counts, still divided in folders
         with open(path + "Store-Counts/" + str(i) + ".json", "w") as fp:

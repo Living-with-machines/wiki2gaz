@@ -5,7 +5,15 @@ import glob
 import pandas as pd
 from pathlib import Path
 from ast import literal_eval
+from argparse import ArgumentParser
+import os
 
+parser = ArgumentParser()
+parser.add_argument("-p","--path", dest="path", help="path to resources directory", action="store", type=str, default="./resources/")
+
+args = parser.parse_args()
+
+resources_dir = args.path
 
 # ---------------
 # 1. WIKIDATA GAZETTEER
@@ -14,7 +22,7 @@ from ast import literal_eval
 
 # Load Wikidata resource:
 print("Loading the wikidata gazetteer.")
-wikidata_path = "resources/wikidata/"
+wikidata_path = os.path.join(resources_dir, "wikidata/")
 df = pd.DataFrame()
 if not Path(wikidata_path + "wikidata_gazetteer.csv").exists():
     all_files = glob.glob(wikidata_path + "extracted/*.csv")
@@ -44,7 +52,7 @@ if not Path(wikidata_path + "mentions_to_wikidata.json").exists():
     # ---------------
 
     # Load Wikipedia resources:
-    wikipedia_path = "resources/wikipedia/extractedResources/"
+    wikipedia_path = os.path.join(resources_dir, "wikipedia/extractedResources/")
 
     print("Loading mention_overall_dict.")
     with open(wikipedia_path + "mention_overall_dict.json", "r") as f:
@@ -77,23 +85,33 @@ if not Path(wikidata_path + "mentions_to_wikidata.json").exists():
     wikidata_altnames = dict()
     for i, row in df.iterrows():
         wk = row["wikidata_id"]
-        alias_dict = literal_eval(row["alias_dict"])
+        try: 
+            alias_dict = literal_eval(row["alias_dict"])
+        except ValueError:
+            continue
+        
         for lang in alias_dict:
             for al in alias_dict[lang]:
                 if al in wikidata_altnames:
                     wikidata_altnames[al].append(wk)
                 else:
                     wikidata_altnames[al] = [wk]
+        
         if row["english_label"] in wikidata_altnames:
             wikidata_altnames[row["english_label"]].append(wk)
         else:
             wikidata_altnames[row["english_label"]] = [wk]
+        
         if type(row["nativelabel"]) == list:
-            for nl in literal_eval(row["nativelabel"]):
-                if nl in wikidata_altnames:
-                    wikidata_altnames[nl].append(wk)
-                else:
-                    wikidata_altnames[nl] = [wk]
+            try:
+                for nl in literal_eval(row["nativelabel"]):
+                    if nl in wikidata_altnames:
+                        wikidata_altnames[nl].append(wk)
+                    else:
+                        wikidata_altnames[nl] = [wk]
+            except ValueError:
+                continue
+
     wikidata_altnames_counter = dict()
     for aln in wikidata_altnames:
         wikidata_altnames_counter[aln] = Counter(wikidata_altnames[aln])
@@ -193,7 +211,7 @@ if not Path(wikidata_path + "mentions_to_wikidata.json").exists():
 if not Path(wikidata_path + "overall_entity_freq_wikidata.json").exists():
     print("Creating the wikidata overall frequency dictionary.")
 
-    wikipedia_path = "/resources/wikipedia/extractedResources/"
+    wikipedia_path = os.path.join(resources_dir, "wikipedia/extractedResources/")
 
     with open(wikipedia_path + "overall_entity_freq.json", "r") as f:
         overall_entity_freq = json.load(f)
