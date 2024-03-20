@@ -15,7 +15,7 @@ pydash = "^6.0.2"
 wget = "^3.2"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.1.0"
+black = "^24.3.0"
 ipykernel = "^6.21.3"
 pylint = "^2.17.1"
 
